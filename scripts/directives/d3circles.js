@@ -28,7 +28,7 @@
 
 							scope.$watch("data", function(newData, oldData) {
 								if (newData != oldData) {
-									scope.change(newData);
+									scope.render(newData);
 								};
 							}, true);
 
@@ -39,7 +39,7 @@
 								p = Math.PI * 2
 
 							var arc = d3.svg.arc()
-								.innerRadius(10)
+								.innerRadius(30)
 								.outerRadius(r)
 							
 							var pie = d3.layout.pie()
@@ -55,9 +55,9 @@
 
 							var group = svg.append("g")
 								.attr("transform", "translate(100, 100)")
-								.style("background-color", "green")
 
 							scope.arcTween = function(a) {
+								console.log(a)
 								var i = d3.interpolate(this._current, a);
 								this._return = i(0);
 								return function(t) {
@@ -66,6 +66,7 @@
 							}
 
 							scope.change = function(data) {
+								console.log(data.length)
 								var path = group.selectAll("path")
 									.data(pie(data));
 
@@ -80,16 +81,16 @@
 								var path = group.selectAll("path")
 									.data(pie(data))
 									.enter()
-									.append("path");
+									.append("path")
+									.attr("fill", "#rgba(250,250,250,1)");
 
-								path.transition()
-									.duration(100)
-									.attr("fill", function(d, i) {
+								path.attr("fill", function(d, i) {
 										return color(d.data.score);
 									})
 									.attr("d", arc)
 									.each(function(d) {
 										this._current = d; // store the initial angles
+										scope.change(data)
  									})
 
 							};

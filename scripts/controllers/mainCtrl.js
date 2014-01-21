@@ -9,10 +9,10 @@
 		      		$scope.detailItem = item;
 		      		$scope.data.push({
 		      			name: $scope.randomNames[parseInt(random)],
-		      			score: Math.random()*400+140
+		      			score: parseInt(Math.random()*400+140)
 		      		})
 
-		      		$scope.data.splice(index, 1);
+		      		//$scope.data.splice(index, 1);
 		    	});
 		  	}
 
