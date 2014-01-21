@@ -1,0 +1,55 @@
+<!doctype html>
+
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="utf-8">
+
+    <title>D3 and Angular</title>
+    <style>
+        body, html, svg {
+            display: block;
+            padding: 0;
+            margin: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.1);
+        }
+
+        #loader {
+            position: absolute;
+            z-index: 999;
+            left: 10px;   
+            color: white;
+            font-weight: bold;   
+            background-color: black; 
+        }
+
+    </style>
+    <!--[if lt IE 9]>
+    <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div ng-controller="MainCtrl">
+        <div d3-chart bar-height="20" bar-padding="5" data="data" label="name" on-click="clickedBar(item, index)"></div>
+        <div d3-circle data="data"></div>
+    </div>
+
+<!--
+    <div ng-controller="CircleCtrl">
+        <div d3-circle></div>
+    </div>
+-->
+
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.2.8/angular.min.js"></script>
+    
+    <script src="scripts/app.js"> </script>
+    <script src="scripts/services/d3.js"> </script>
+    <script src="scripts/controllers/mainCtrl.js"> </script>
+    <script src="scripts/controllers/circleCtrl.js"> </script>
+    <script src="scripts/directives/d3charts.js"> </script>
+    <script src="scripts/directives/d3circles.js"> </script>
+
+</body>
+</html>
