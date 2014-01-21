@@ -28,21 +28,12 @@
 
 							scope.$watch("data", function(newData, oldData) {
 								if (newData != oldData) {
-									scope.render(newData);
+									scope.change(newData);
 								};
 							}, true);
 
 
 							var color = d3.scale.category20()
-
-							var svg = d3.select(element[0])
-								.append("svg")
-								.style("width", "100%")
-								.style("height", "500px")
-
-							var group = svg.append("g")
-								.attr("transform", "translate(100, 100)")
-								.style("background-color", "green")
 
 							var r = 90,
 								p = Math.PI * 2
@@ -55,66 +46,51 @@
 								.value(function(d) { 
 									return d.score;
 								})
-								.sort(null)
+								.sort(null)							
 
-							scope.enter = function(data) {
-								/*var arcs = group.selectAll(".arc")
-									.data(pie(scope.data))
-									.enter()
-									.append("g")
-									.attr("class", "arc")
+							var svg = d3.select(element[0])
+								.append("svg")
+								.style("width", "100%")
+								.style("height", "500px")
 
-								arcs.append("path")
-									.attr("d", arc) */
-									//.attr("fill", function(d) {
-										//return color(d.data.score);
-									//})
+							var group = svg.append("g")
+								.attr("transform", "translate(100, 100)")
+								.style("background-color", "green")
 
-								var path = group.datum(data).selectAll("path")
-									.data(pie(data))
-									.enter()
-									.append("path")
-									/*.attr("fill", function(d, i) {
-										return color(i);
-									})
-									.attr("d", arc)*/
+							scope.arcTween = function(a) {
+								var i = d3.interpolate(this._current, a);
+								this._return = i(0);
+								return function(t) {
+									return arc(i(t));
+								}
 							}
 
-							scope.exit = function(data) {
-								var path = group.datum(data).selectAll("path")
-									.data(pie(data))
-									.exit()
-									.remove
-							}
+							scope.change = function(data) {
+								var path = group.selectAll("path")
+									.data(pie(data));
 
-							scope.update = function(data) {
-								/*var arcs = group.selectAll(".arc")
-									.data(pie(scope.data))
-
-								arcs.append("path")
-									.attr("d", arc)
-									.attr("fill", function(d) {
-										return color(d.data.score);
-									})*/
-
-								var path = group.datum(data).selectAll("path")
-									.data(pie(data))
-									.attr("fill", function(d, i) {
-										return color(i);
-									})
-									.attr("d", arc)
-									/*.transition()
+								path.transition()
 									.duration(1000)
-									.call(arcTween, )*/
-
+									.attrTween("d", scope.arcTween); // redraw the arcs
 							}
 
 							scope.render = function(data) {
 								if (!data) return;
 
-								scope.enter(data);
-								scope.exit(data);
-								scope.update(data);
+								var path = group.selectAll("path")
+									.data(pie(data))
+									.enter()
+									.append("path");
+
+								path.transition()
+									.duration(100)
+									.attr("fill", function(d, i) {
+										return color(d.data.score);
+									})
+									.attr("d", arc)
+									.each(function(d) {
+										this._current = d; // store the initial angles
+ 									})
 
 							};
 

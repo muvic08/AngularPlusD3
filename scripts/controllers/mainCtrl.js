@@ -9,7 +9,7 @@
 		      		$scope.detailItem = item;
 		      		$scope.data.push({
 		      			name: $scope.randomNames[parseInt(random)],
-		      			score: Math.random()*400
+		      			score: Math.random()*400+140
 		      		})
 
 		      		$scope.data.splice(index, 1);
