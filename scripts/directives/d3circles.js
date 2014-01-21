@@ -57,7 +57,6 @@
 								.attr("transform", "translate(100, 100)")
 
 							scope.arcTween = function(a) {
-								console.log(a)
 								var i = d3.interpolate(this._current, a);
 								this._return = i(0);
 								return function(t) {
@@ -66,7 +65,6 @@
 							}
 
 							scope.change = function(data) {
-								console.log(data.length)
 								var path = group.selectAll("path")
 									.data(pie(data));
 

@@ -12,7 +12,8 @@
 		      			score: parseInt(Math.random()*400+140)
 		      		})
 
-		      		//$scope.data.splice(index, 1);
+		      		if ($scope.data.length == 7)
+		      			$scope.data.splice(index, 1);
 		    	});
 		  	}
 
